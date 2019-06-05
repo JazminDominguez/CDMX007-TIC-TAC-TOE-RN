@@ -1,0 +1,22 @@
+{
+  "name": "neon_tictactoe",
+  "version": "1.0.0",
+  "description": "Juego de Tic-Tac-Toe creado con React Native",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JazminDominguez/CDMX007-TIC-TAC-TOE-RN.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JazminDominguez/CDMX007-TIC-TAC-TOE-RN/issues"
+  },
+  "homepage": "https://github.com/JazminDominguez/CDMX007-TIC-TAC-TOE-RN#readme"
+}

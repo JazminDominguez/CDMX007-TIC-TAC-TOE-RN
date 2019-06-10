@@ -1,21 +1,43 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, Button, Text, View, StyleSheet, TextInput } from 'react-native';
+import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
+
+
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import GameBegining from './components/GameBegining'
+import GameBoard from './components/GameBoard'
 
 export default class App extends React.Component {
+  state = {
+    player1: [],
+    player2: [],
+    gameStarted: false,
+  };
+  startGame() {
+    this.setState = ({ gameStarted: true });
+  }
+
+  renderGame(){
+    if(this.state.gameStarted == 'true')
+       return <GameBoard/>;
+    return  <GameBegining/>;
+  
+  }
+
+
+
   render() {
     return (
+      //aquí van los componentes
+      //player1
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+           { this.renderGame() }
+      
       </View>
+
+
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+

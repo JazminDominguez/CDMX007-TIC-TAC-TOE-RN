@@ -1,7 +1,5 @@
 import React from 'react';
 import { Alert, Button, Text, View, StyleSheet, TextInput } from 'react-native';
-import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation'; 
-import AppNavigator from './AppNavigation';
 
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -41,7 +39,7 @@ export default class GameBegining extends React.Component {
         <View style={styles.buttonStart}>
     
           <Button
-            onPress={() => this.props.navigation.navigate('Board')}
+            onPress={() => this.startGame()}
             title="Play!"
             color="#00FF00"
           />

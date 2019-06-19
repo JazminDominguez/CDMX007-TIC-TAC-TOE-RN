@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, View, Alert, Button } from 'react-native';
 import { player1, player2 } from '../App';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 
@@ -29,7 +29,41 @@ componentDidMount(){
     });
   }
 
+  getWinner =()=>{
+    const num_tiles = 3;
+    let arr = this.state.gameState;
+    let sum;
+//check rows
+for(let i=0; i< num_tiles; i++){
+  sum = arr[i][0] + arr[i][1] + arr[i][2];
+  if(sum ==3){ return 1;}
+  else if(sum == -3){ return -1;}
+}
+//check columns
+for(let i=0; i< num_tiles; i++){
+  sum = arr[0][i] + arr[1][i] + arr[2][i];
+  if(sum ==3){ return 1;}
+  else if(sum == -3){ return -1;}
+}
+//check diagonals
+sum = arr[0][0]+arr[1][1]+arr[2][2];
+if(sum == 3 ){return 1;}
+else if(sum == -3){ return -1;}
+
+sum = arr[2][0]+arr[1][1]+arr[2][0];
+if(sum == 3 ){return 1;}
+else if(sum == -3){ return -1;}
+
+//there are no winners
+return 0;
+  }
+
   onTilePress = (row, col)=>{
+//para que no se pueda cambiar de jugada
+let value =this.state.gameState[row][col];
+if (value !== 0){return ;}
+
+
     let currentPlayer = this.state.currentPlayer;
     let arr = this.state.gameState.slice();
     arr[row][col] = currentPlayer;
@@ -37,6 +71,17 @@ componentDidMount(){
 
     let nextPlayer= (currentPlayer == 1)? -1 :1;
     this.setState({currentPlayer: nextPlayer})
+
+
+    //check for winners
+    let winner = this.getWinner();
+    if (winner == 1){
+      Alert.alert('¡Jugador 1 ha ganado!');
+      this.initializeGame();
+    }else if(winner == -1){
+      Alert.alert("¡Jugador 2 ha ganado!");
+      this.initializeGame();
+    }
   }
 
   renderIcon = (row, col)=>{
@@ -58,6 +103,10 @@ renderName=()=>{
    case -1: return <Text style={styles.player2color}>{this.props.player2Name}</Text>;
   default: return <Text style={styles.textColor1}> Jugador </Text>
   }
+}
+
+onNewGamePress=()=>{
+  this.initializeGame();
 }
 
   render() {
@@ -111,7 +160,9 @@ renderName=()=>{
           </View>
 
         </View>
-
+        <View style={styles.buttonStart}>
+      <Button title="Nuevo Juego" onPress={this.onNewGamePress} color="#00FF00"/>
+      </View>
       </View>
     );
   }
@@ -146,12 +197,17 @@ const styles = StyleSheet.create({
   },
   cat:{
     color: 'red',
-    fontSize: 50,
-    flex: 1,
+    fontSize: 70,
+    textShadowColor: '#ff1139',
+  textShadowOffset: {width: -1, height: 1},
+  textShadowRadius: 99
   },
   dog:{
     color: 'blue',
-    fontSize: 50,
+    fontSize: 70,
+    textShadowColor: '#3d7dff',
+  textShadowOffset: {width: -1, height: 1},
+  textShadowRadius: 99
   },
   turnContainer:{
   marginTop: 120,
@@ -171,6 +227,11 @@ const styles = StyleSheet.create({
     textColor1:{
  color: '#fff',
     fontSize: 25,
+  },
+  buttonStart: {
+    margin: 10,
+    width: 80,
+    height: 40,
+    marginLeft: 143,
   }
-  
 });
